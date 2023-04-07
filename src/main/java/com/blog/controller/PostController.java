@@ -2,12 +2,16 @@ package com.blog.controller;
 
 import com.blog.dto.PostDto;
 import com.blog.service.PostService;
+import jakarta.validation.Valid;
+import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.naming.Binding;
 import java.util.List;
 
 @Controller()
@@ -39,10 +43,16 @@ public class PostController {
 
 
    @PostMapping("/admin/posts")
-   public String createPost(@ModelAttribute PostDto postDto){
-    postDto.setUrl(getUrl(postDto.getTitle()));
-    postService.createPost(postDto);
-    return "redirect:/admin/posts";
+   public String createPost(@Valid @ModelAttribute("post") PostDto postDto,
+                            BindingResult bindResult, Model model){
+
+        if(bindResult.hasErrors()){
+            model.addAttribute("post", postDto);
+            return "admin/create_post";
+        }
+        postDto.setUrl(getUrl(postDto.getTitle()));
+        postService.createPost(postDto);
+        return "redirect:/admin/posts";
    }
 
    private static String getUrl(String postTitle){
