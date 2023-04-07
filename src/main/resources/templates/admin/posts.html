@@ -6,6 +6,22 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Blog</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">New Post <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/admin/posts}">Posts<span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>
 
         <div class="container">
             <div class="row">
@@ -20,11 +36,11 @@
                     <th style="width:20%">Actions</th>
                 </thead>
                 <tbody>
-                <tr th:each = "post: ${posts}">
-                    <td th:test="${postsStat.count}">1</td>
-                    <td th:test="${post.title}">Post Title</td>
-                    <td th:test="${post.shortDescription}">Post Short Description</td>
-                    <td th:test="${post.createdOn}">Post Created On</td>
+                <tr th:each = "post : ${posts}">
+                    <td th:text="${postStat.count}">1</td>
+                    <td th:text="${post.title}"></td>
+                    <td th:text="${post.shortDescription}"></td>
+                    <td th:text="${post.createdOn}"></td>
                     <td></td>
                 </tr>
                 </tbody>

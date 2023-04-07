@@ -13,6 +13,6 @@ public class PostDto {
     private String url;
     private String content;
     private String shortDescription;
-    private LocalDate createOn;
+    private LocalDate createdOn;
     private LocalDate updateOn;
 }

@@ -13,7 +13,7 @@ public class PostMapper {
                 .url(post.getUrl())
                 .content(post.getContent())
                 .shortDescription(post.getShortDescription())
-                .createOn(post.getCreatedOn())
+                .createdOn(post.getCreatedOn())
                 .updateOn(post.getUpdatedOn())
                 .build();
     }
@@ -26,7 +26,7 @@ public class PostMapper {
                 .content(postDto.getContent())
                 .url(postDto.getUrl())
                 .shortDescription(postDto.getShortDescription())
-                .createdOn(postDto.getCreateOn())
+                .createdOn(postDto.getCreatedOn())
                 .updatedOn(postDto.getUpdateOn())
                 .build();
     }
