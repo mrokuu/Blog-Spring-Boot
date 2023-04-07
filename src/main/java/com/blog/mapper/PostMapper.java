@@ -6,7 +6,7 @@ import com.blog.entity.Post;
 public class PostMapper {
 
     // conver PostEntity to PostDto
-    public PostDto mapToDto(Post post ){
+    public static PostDto mapToDto(Post post){
         return PostDto.builder()
                 .id(post.getId())
                 .title(post.getTitle())

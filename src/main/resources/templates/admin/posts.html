@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+        <div class="container">
+            <div class="row">
+                <h1>List Blog Posts</h1>
+            </div>
+            <table class="table table-striped table-hover table-bordered">
+                <thead class="table-dark">
+                    <th style="width:10%">#</th>
+                    <th style="width:20%">Post Title</th>
+                    <th style="width:30%">Post Short Description</th>
+                    <th style="width:20%"> Post Created On</th>
+                    <th style="width:20%">Actions</th>
+                </thead>
+                <tbody>
+                <tr th:each = "post: ${posts}">
+                    <td th:test="${postsStat.count}">1</td>
+                    <td th:test="${post.title}">Post Title</td>
+                    <td th:test="${post.shortDescription}">Post Short Description</td>
+                    <td th:test="${post.createdOn}">Post Created On</td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+</body>
+</html>
