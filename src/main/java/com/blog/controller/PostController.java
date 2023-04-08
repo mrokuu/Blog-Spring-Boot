@@ -3,12 +3,14 @@ package com.blog.controller;
 import com.blog.dto.PostDto;
 import com.blog.service.PostService;
 import jakarta.validation.Valid;
+import org.springframework.boot.Banner;
 import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.naming.Binding;
@@ -61,4 +63,41 @@ public class PostController {
         url = url.replaceAll("[^A-Za-z0-9]", "-");
         return url;
    }
+
+    @GetMapping("/admin/posts/{postId}/edit")
+    public String editPostForm(@PathVariable("postId") Long postId,
+                               Model model){
+
+        PostDto postDto = postService.findPostById(postId);
+        model.addAttribute("post", postDto);
+        return "admin/edit_post";
+    }
+
+    @PostMapping("/admin/posts/{postId}")
+    public String updatePost(@PathVariable("postId") Long postId, @Valid @ModelAttribute("post") PostDto postDto,
+     Model model, BindingResult bindingResult){
+    if(bindingResult.hasErrors()){
+        model.addAttribute("post", postDto);
+        return "admin/create_post";
+    }
+        postDto.setId(postId);
+        postService.updatePost(postDto);
+        return "redirect:/admin/posts";
+    }
+
+@GetMapping("/admin/posts/{postId}/delete")
+    public String deletePost(@PathVariable("postId") Long postId){
+        postService.deletePost(postId);
+        return "redirect:/admin/posts";
+    }
+
+
+
+    @GetMapping("/admin/posts/{postId}/delete")
+    public String viewPost(@PathVariable("postId") String postUrl, Model model){
+        PostDto postDto = postService.findPostByUrl(postUrl);
+        model.addAttribute("post", postDto);
+        return "admin/view_post";
+    }
+
 }
