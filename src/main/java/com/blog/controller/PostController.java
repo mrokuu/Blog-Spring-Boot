@@ -57,12 +57,14 @@ public class PostController {
         return "redirect:/admin/posts";
    }
 
-   private static String getUrl(String postTitle){
+    private static String getUrl(String postTitle){
         String title = postTitle.trim().toLowerCase();
-        String url = title.replace("\\s+", "-");
+        String url = title.replaceAll("\\s+", "-");
+
         url = url.replaceAll("[^A-Za-z0-9]", "-");
+
         return url;
-   }
+    }
 
     @GetMapping("/admin/posts/{postId}/edit")
     public String editPostForm(@PathVariable("postId") Long postId,
@@ -93,8 +95,8 @@ public class PostController {
 
 
 
-    @GetMapping("/admin/posts/{postId}/delete")
-    public String viewPost(@PathVariable("postId") String postUrl, Model model){
+    @GetMapping("/admin/posts/{postUrl}/view")
+    public String viewPost(@PathVariable("postUrl") String postUrl, Model model){
         PostDto postDto = postService.findPostByUrl(postUrl);
         model.addAttribute("post", postDto);
         return "admin/view_post";
