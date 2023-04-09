@@ -1,6 +1,7 @@
 package com.blog.controller;
 
 
+import com.blog.dto.CommentDto;
 import com.blog.dto.PostDto;
 import com.blog.service.PostService;
 import org.springframework.stereotype.Controller;
@@ -20,29 +21,29 @@ public class BlogController {
         this.postService = postService;
     }
 
-
     @GetMapping("/")
     public String viewBlogPosts(Model model){
         List<PostDto> postsResponse = postService.findAllPosts();
         model.addAttribute("postsResponse", postsResponse);
-        return "blog/view";
+        return "blog/view_posts";
     }
 
     @GetMapping("/post/{postUrl}")
-    private String showPost(@PathVariable("postUrl") String postUrl, Model model){
-        PostDto postDto = postService.findPostByUrl(postUrl);
-        model.addAttribute("post", postDto);
+    private String showPost(@PathVariable("postUrl") String postUrl,
+                            Model model){
+        PostDto post = postService.findPostByUrl(postUrl);
 
+        CommentDto commentDto = new CommentDto();
+        model.addAttribute("post", post);
+        model.addAttribute("comment", commentDto);
         return "blog/blog_post";
     }
 
-
-@GetMapping("/page/search")
-public String searchPosts(@RequestParam(value="query") String query, Model model){
+    @GetMapping("/page/search")
+    public String searchPosts(@RequestParam(value = "query") String query,
+                              Model model){
         List<PostDto> postsResponse = postService.searchPosts(query);
         model.addAttribute("postsResponse", postsResponse);
-        return "blog/view";
-}
-
-
+        return "blog/view_posts";
+    }
 }

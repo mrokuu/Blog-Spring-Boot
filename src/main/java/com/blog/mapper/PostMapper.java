@@ -3,6 +3,8 @@ package com.blog.mapper;
 import com.blog.dto.PostDto;
 import com.blog.entity.Post;
 
+import java.util.stream.Collectors;
+
 public class PostMapper {
 
     // conver PostEntity to PostDto
@@ -15,6 +17,9 @@ public class PostMapper {
                 .shortDescription(post.getShortDescription())
                 .createdOn(post.getCreatedOn())
                 .updateOn(post.getUpdatedOn())
+                .comments(post.getComments().stream()
+                        .map((comment) -> CommentMapper.mapToCommentDto(comment))
+                        .collect(Collectors.toSet()))
                 .build();
     }
 
