@@ -39,6 +39,7 @@ public class BlogController {
         return "blog/blog_post";
     }
 
+
     @GetMapping("/page/search")
     public String searchPosts(@RequestParam(value = "query") String query,
                               Model model){

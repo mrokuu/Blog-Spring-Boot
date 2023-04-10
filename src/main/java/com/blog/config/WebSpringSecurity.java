@@ -57,6 +57,3 @@ public class WebSpringSecurity {
                 .passwordEncoder(passwordEncoder());
     }
 }
-
-
-

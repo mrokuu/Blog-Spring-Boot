@@ -7,22 +7,20 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-@Setter
-@Getter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostDto {
     private Long id;
-    @NotEmpty
+    @NotEmpty(message = "Post title should not be empty")
     private String title;
     private String url;
-    @NotEmpty
+    @NotEmpty(message = "Post content should not be empty")
     private String content;
-    @NotEmpty
+    @NotEmpty(message = "Post short description should be empty")
     private String shortDescription;
     private LocalDateTime createdOn;
-    private LocalDateTime updateOn;
-
+    private LocalDateTime updatedOn;
     private Set<CommentDto> comments;
 }

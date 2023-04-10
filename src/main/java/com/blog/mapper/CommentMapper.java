@@ -5,7 +5,6 @@ import com.blog.entity.Comment;
 
 
 public class CommentMapper {
-
     public static CommentDto mapToCommentDto(Comment comment){
         return CommentDto.builder()
                 .id(comment.getId())
@@ -28,4 +27,3 @@ public class CommentMapper {
                 .build();
     }
 }
-
