@@ -1,25 +1,30 @@
 package com.blog.service.implementation;
 
+
 import com.blog.dto.RegistrationDto;
 import com.blog.entity.Role;
 import com.blog.entity.User;
 import com.blog.repository.RoleRepository;
 import com.blog.repository.UserRepository;
 import com.blog.service.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 @Service
-public class UserImplementation implements UserService {
+public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private RoleRepository roleRepository;
-
-    public UserImplementation(UserRepository userRepository, RoleRepository roleRepository) {
+    private PasswordEncoder passwordEncoder;
+   
+    public UserServiceImpl(UserRepository userRepository,
+                           RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+
     }
 
     @Override
@@ -27,7 +32,8 @@ public class UserImplementation implements UserService {
         User user = new User();
         user.setName(registrationDto.getFirstName() + " " + registrationDto.getLastName());
         user.setEmail(registrationDto.getEmail());
-        user.setPassword(registrationDto.getPassword());
+
+        user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
         Role role = roleRepository.findByName("ROLE_GUEST");
         user.setRoles(Arrays.asList(role));
         userRepository.save(user);

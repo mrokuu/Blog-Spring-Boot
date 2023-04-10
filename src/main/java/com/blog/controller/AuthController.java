@@ -20,27 +20,35 @@ public class AuthController {
         this.userService = userService;
     }
 
+    // handler method to handle login page request
+    @GetMapping("/login")
+    public String loginPage(){
+        return "login";
+    }
+    // handler method to handle user registration request
     @GetMapping("/register")
-    public String registrationForm(Model model){
+    public String showRegistrationForm(Model model){
+        // this object holds form data
         RegistrationDto user = new RegistrationDto();
         model.addAttribute("user", user);
-
         return "register";
     }
-    @PostMapping("register/save")
+
+    // handler method to handle user registration form submit request
+    @PostMapping("/register/save")
     public String register(@Valid @ModelAttribute("user") RegistrationDto user,
-                           BindingResult bindingResult, Model model){
+                           BindingResult result,
+                           Model model){
         User existingUser = userService.findByEmail(user.getEmail());
-        if(existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()){
-            bindingResult.rejectValue("email", null, "There is already a user with same email");
+        if(existingUser != null && existingUser.getEmail() !=null && !existingUser.getEmail().isEmpty()){
+            result.rejectValue("email", null, "There is already a user with same email id");
         }
 
-        if(bindingResult.hasErrors()){
+        if(result.hasErrors()){
             model.addAttribute("user", user);
             return "register";
         }
         userService.saveUser(user);
         return "redirect:/register?success";
     }
-
 }
